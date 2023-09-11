@@ -1,0 +1,152 @@
+.user-cell > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user-cell__content {
+  display: flex;
+  flex-direction: column;
+  margin-left: .75rem;
+}
+
+.user-cell__role {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  overflow: hidden;
+  text-transform: capitalize;
+}
+
+.date-cell {
+  width: 125px;
+}
+
+.date-cell > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.appointments {
+  display: flex;
+}
+
+.appointments-table__tr td {
+  padding: .35rem .75rem;
+  cursor: pointer;
+}
+
+.appointments-table__tr:hover:not(.appointments-table__tr--selected ) {
+  background: rgba(0,0,0,.05);
+}
+
+.appointments-table__tr:active:not(.appointments-table__tr--selected ) {
+  background: rgba(0,0,0,.075);
+}
+
+.appointments-table__tr--selected {
+  background: #007bff;
+}
+
+.appointments__details {
+  max-width: 380px;
+}
+
+.appointments-details__note {
+  border: 3px dashed #dee2e6;
+  border-radius: 8px;
+  width: 100%;
+  height: 210px;
+  margin: 20px 0;
+}
+
+.appointments-details__button {
+  background-color: rgba(53, 60, 80, 1);
+  border-color: #353C50;
+  padding: .75rem 1rem;
+  width: 100%;
+}
+
+.appointments-details__button:hover {
+  background-color: rgba(53, 60, 80, .8);
+  border-color: #353C50;
+
+}
+
+.appointments__link {
+  padding: 17px;
+  display: block;
+  border: 1px dashed rgba(53, 60, 80, .2);
+  border-radius: 8px;
+  margin: 10px 0;
+  width: 100%;
+  color:rgba(53, 60, 80,1)
+}
+
+.appointments__link:hover {
+  color: inherit;
+  text-decoration: none;
+  background-color: rgba(53, 60, 80, .05);
+}
+
+.appointments__link svg {
+  margin-right: 1rem;
+  fill: rgba(53, 60, 80, 0.4);
+}
+
+.profileImage {
+  width: 48px;
+  opacity: .2;
+  height: auto;
+}
+
+.tdIcon {
+  text-align: right;
+}
+.tdIcon svg {
+  fill: rgba(53, 60, 80, .2);
+}
+
+.details .badge {
+  display: flex;
+}
+
+.details .badge .profileImage {
+  width: 56px;
+  height: 56px;
+  opacity: .2;
+}
+
+.details .badge .names {
+  font-size: 18px;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.details .badge .names .age {
+  font-size: 16px;
+}
+
+.details{
+  height: calc(100% - 40px);
+}
+
+.details .additionalInfo {
+  margin-top: 1rem;
+}
+
+.item-list:last-child {
+  margin-bottom: 10px;
+}
+
+.item-list {
+  padding: 4px 16px;
+  display: flex;
+  background-color: white;
+  border-bottom: 1px solid rgba(53, 60, 80, .1) ;
+}
+
+.details .additionalInfo svg {
+  fill: rgba(53, 60, 80, .4);
+}

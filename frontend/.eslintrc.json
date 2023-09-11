@@ -1,0 +1,25 @@
+{
+  "settings": { "react": { "version": "detect" } },
+  "extends": [
+    "../.eslintrc.json",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": 0,
+    "jsx-quotes": ["error", "prefer-single"],
+    "react/self-closing-comp": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-boolean-value": ["error", "never"],
+    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
+    "react/jsx-closing-tag-location": 0,
+    "react/jsx-first-prop-new-line": ["error", "multiline"],
+    "react/jsx-indent": ["warn", 2, { "checkAttributes": true, "indentLogicalExpressions": true }],
+    "react/jsx-indent-props": ["warn", 2],
+    "react/jsx-key": "error",
+    "react/jsx-tag-spacing": "error",
+    "react/jsx-max-props-per-line": ["error", { "maximum": 2, "when": "always"}]
+  }
+}

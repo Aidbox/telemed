@@ -1,0 +1,201 @@
+.layout-full {
+  display: flex;
+  height: 500px;
+  width: 100%;
+  border: 1px solid var(--mainColor);
+}
+
+
+.room-list {
+  width: 250px;
+  border-right: 1px solid var(--mainColor);
+  overflow-y: auto;
+  position: relative;
+}
+
+.room-list .header {
+  position: sticky;
+  top: 0;
+  background-color: var(--mainColor);
+  color: white;
+  padding: .5rem .125rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.room {
+  padding: 1rem .25rem;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--fillSvg);
+  margin: 0 .5rem;
+}
+
+.room:last-child {
+  border-bottom: none;
+}
+
+.room:hover {
+  background-color: var(--hoverColor);
+}
+
+.room.active {
+  background-color: var(--hoverColor);
+}
+
+.message-list {
+  flex-grow: 1;
+  background-color: var(--bgColor);
+  padding: 0.5rem 1rem;
+  overflow-y: scroll;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: calc(100% - 61px); /* input height */
+  border-radius: var(--borderRadius);
+}
+
+.message {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.message.reverse {
+  flex-direction: row-reverse;
+}
+
+.message .message-inner {
+  max-width: 293px;
+}
+
+.message .message-inner .inner {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mainColor);
+  color: white;
+  padding: .5rem .75rem;
+  border-radius: var(--borderRadius);
+}
+
+.message.reverse .message-inner .inner {
+  background-color: rgb(48 108 197);
+}
+
+.inner .text {
+  font-weight: lighter;
+  overflow-wrap: break-word;
+  line-height: .95em;
+}
+
+.inner .headers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inner .headers .username {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.inner .headers .time {
+  font-size: 14px;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.message.reverse .avatar {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+.avatar img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.message-input {
+  margin: 15px 0;
+  display: flex;
+
+
+}
+
+.header {
+  background-color: var(--bgColor);
+  padding: 10px 5px;
+  margin-bottom: 15px;
+  display: flex;
+  border-radius: var(--borderRadius);
+  justify-items: center;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-lastActive{
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.header-name{
+  margin: 0;
+}
+
+.message-input textarea {
+  flex-grow: 1;
+  height: 45px;
+  padding: 0;
+  padding-left: .5rem;
+  padding-top: 0.60rem;
+  border: none;
+  border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+  background-color: var(--bgColor);
+  resize: none;
+}
+
+.message-input textarea:focus {
+  outline: none;
+}
+
+.message-input .send {
+  height: 45px;
+  width: 45px;
+  border: none;
+  border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+  background-color: var(--bgColor);
+}
+
+.message-input .send:focus {
+  outline: none;
+}
+
+.message-input .send:hover:enabled {
+  background-color: var(--hoverColor);
+}
+
+.message-input .send svg {
+  transform: rotate(45deg);
+  fill: var(--fillSvg)
+}
+
+.message-input .send:hover:enabled svg {
+  transform: rotate(45deg);
+  fill: var(--mainColor)
+}
+

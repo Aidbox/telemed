@@ -1,0 +1,52 @@
+.content{
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 0;
+  flex-direction: column;
+}
+
+.head-block {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.avatar{
+  height: 100px;
+  width: 100px;
+}
+
+.avatar img{
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.names {
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.names .userName {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.names .roleName{
+  color: lightgrey;
+  text-transform: capitalize;
+}
+
+.user-attributes {
+  display: block;
+  margin: 1rem 0 0 0;
+  font-size: .75rem;
+}
+
+.user-attributes .user-attributes__row {
+  display: flex;
+}
+
+.user-attributes dd {
+  margin: 0 .5rem;
+}

@@ -1,0 +1,55 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.infoContainer {
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+}
+
+.identity {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 0.1em 0.3em 0.1em 0;
+  font-size: 1.2em;
+  display: inline-flex;
+}
+
+.identity svg {
+  margin-left: 0.3em;
+}
+
+.reconnectingContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(40, 42, 43, 0.75);
+  z-index: 1;
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.avatarContainer svg {
+  transform: scale(2);
+}

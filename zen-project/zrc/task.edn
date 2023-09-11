@@ -1,0 +1,55 @@
+{ns     task
+ import #{aidbox awf.subscription-trigger awf.task awf.scheduler }
+
+
+
+ send-email-notification
+ {:zen/tags         #{awf.task/definition zen/schema}
+  :type             zen/map
+  :concurrencyLimit 1
+  :require #{:params}
+  :keys             {:params {:type    zen/map
+                              :require #{:id}
+                              :keys    {:id {:type zen/string}}}
+                     :error  {:type            zen/map
+                              :validation-type :open}
+                     :result {:validation-type :open
+                              :type            zen/map}}}
+
+ trigger-on-email-notification
+ {:zen/tags     #{awf.subscription-trigger/rule}
+  :select-by    [{:get-in [:resourceType] :comparator :eq :value "EmailNotification"}
+                 {:get-in [:status] :comparator :eq :value "in-queue"}]
+  :task-request {:definition send-email-notification
+                 :params     {:id (get-in [:id])}}}
+
+
+ subscription-trigger-service
+ {:zen/tags #{aidbox/service}
+  :engine   awf.subscription-trigger/subscription-trigger-service-engine
+  :rules    #{trigger-on-email-notification}}
+
+ appointment-reminder-task
+ {:zen/tags         #{awf.task/definition zen/schema}
+  :type             zen/map
+  :concurrencyLimit 1
+  :require #{:params}
+  :keys             {:params {:type zen/map
+                              :validation-type :open}
+                     :error  {:type            zen/map
+                              :validation-type :open}
+                     :result {:validation-type :open
+                              :type            zen/map}}}
+
+ appointment-reminder
+ {:zen/tags               #{awf.scheduler/rule}
+  :schedule               "* * * * *"
+  :concurrency-policy     "forbid"
+  :start-deadline-seconds 60
+  :task-request           {:definition appointment-reminder-task
+                           :params     {}}}
+ scheduler-service
+ {:zen/tags #{aidbox/service}
+  :engine   awf.scheduler/task-scheduler-service-engine
+  :rules    #{appointment-reminder}}}
+

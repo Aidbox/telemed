@@ -1,0 +1,112 @@
+.item {
+  display: flex;
+  border-bottom: 1px solid var(--bgColor);
+  align-items: center;
+  padding: .5rem 0;
+}
+
+.item .day {
+  width: 100px;
+  padding-right: .5rem;
+}
+
+.item .times {
+  display: flex;
+}
+
+.times .time {
+  width: 120px;
+  text-align: center;
+  background-color: var(--bgSlots);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--mainColor);
+  padding: .25rem .5rem;
+  margin-right: .5rem;
+  cursor: pointer;
+}
+
+.time.new {
+  border-color: transparent;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 1;
+}
+.time.edit{
+  border: 1px solid var(--mainColor);
+}
+.times .time:hover {
+  background-color: var(--mainColor);
+  color: white;
+}
+
+
+/*******
+Modal for creating rules
+ */
+
+.wrapper{
+  position: absolute;
+  display: flex;
+  top:0;bottom:0;
+  left:0;right:0;
+  background-color: rgba(53, 60, 80, .7);
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid var(--mainColor);
+  border-radius: 4px;
+  
+}
+
+.modal .header {
+  text-align: right;
+}
+
+.modal .header button {
+  background-color: transparent;
+  border: none;
+}
+
+.modal .header button:focus {
+  outline: none;
+}
+
+
+.start-end{
+  display: flex;
+  margin-bottom: 1rem;
+}
+.start-end input + input{
+  margin-left: 1rem;
+}
+
+.dow {
+  display: flex;
+}
+
+.dow .dow-item {
+  background-color: var(--bgSlots);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--mainColor);
+  width: 50px;
+  padding: .25rem;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+}
+.dow .dow-item + .dow-item{
+  margin-left: .5rem;
+}
+.dow .dow-item.active {
+  font-weight: bold;
+  border-color: var(--mainColor);
+  background-color: var(--mainColor);
+  color: white;
+}
+
+/***/

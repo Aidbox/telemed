@@ -1,0 +1,142 @@
+
+.profileImage{
+  width: 48px;
+  opacity: .2;
+  height: 48px;
+}
+
+.row {
+  display: flex;
+}
+.row .names{
+  font-size: 18px;
+  margin-left: .75rem;
+  display: flex;
+  flex-direction: column;
+}
+.row .names .name{
+  font-weight: 700;
+}
+.row .names .spec{
+  font-size: 16px;
+}
+
+.details .badge{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.details .badge .profileImage{
+  width: 64px;
+  height: 64px;
+  opacity: .2;
+  margin-bottom: 1rem;
+}
+
+
+.details .badge .names{
+  font-size: 18px;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+
+.availability{
+
+}
+
+.availability .dateChoose{
+  height: 48px;
+  background-color: var(--bgColor);
+  border-radius: var(--borderRadius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dateChoose .date{
+  font-weight: bold;
+}
+.dateChoose .back, .dateChoose .go{
+  width: 64px;
+
+  vertical-align: middle;
+  display: table-cell;
+  cursor: pointer;
+}
+
+.dateChoose .back:hover, .dateChoose .go:hover{
+  background-color: var(--bgColor);
+}
+
+
+.dateChoose .back{
+  text-align: left;
+  padding: 12px 0 12px 16px;
+ }
+
+.dateChoose .go{
+  padding: 12px 16px 12px 0;
+  text-align: right;
+}
+
+.disableHover:hover{
+  background-color: unset!important;
+}
+
+
+.dateChoose svg{
+  fill: var(--fillSvg);
+}
+
+.dateChoose .back svg{
+  transform: rotateY(180deg);
+}
+
+
+.slotList{
+  margin: .5rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: .5rem;
+}
+
+.slotList .slot{
+  height: 48px;
+  border: 1px solid transparent;
+  border-radius: var(--borderRadius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bgColor);
+  color: rgba(53, 60, 80, 1);
+  cursor: pointer;
+}
+
+.slotList .slot:hover{
+  background-color: var(--mainColor);
+  color: white;
+}
+
+.slotList .slot:hover > .slot .time .interval{
+  color: rgba(53, 60, 80, 1)!important;
+}
+
+.slotList .slot.active{
+  background-color: var(--mainColor);
+  color: white;
+}
+.slot .time{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.slot .time .interval{
+  font-size: .75rem;
+}

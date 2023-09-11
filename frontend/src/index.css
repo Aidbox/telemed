@@ -1,0 +1,45 @@
+:root{
+  --mainColor: rgba(53, 60, 80, 1);
+  --bgColor: rgba(53, 60, 80, .05);
+  --hoverColor: rgba(53, 60, 80, .05);
+  --borderRadius: 4px;
+  --fillSvg: rgba(53, 60, 80, .4);
+  --bgSlots: rgba(53, 60, 80, .05);
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Nunito Sans', sans-serif;
+  color:  rgba(53, 60, 80, 1);
+}
+
+.activeLink{
+  background-color:  rgba(53, 60, 80, .05) !important;
+}
+.table td, .table th {
+  border-top: 1px solid rgba(53, 60, 80, .1);
+  border-bottom: 1px solid rgba(53, 60, 80, .1);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover > * {
+  background-color: rgba(53, 60, 80, .05);
+}
+
+.table tbody tr.selected{
+  background-color: rgba(53, 60, 80, .05);
+}
+
+.activeLink{
+  background-color:  rgba(53, 60, 80, .05);
+}
+
+.breadcrumb {
+  color:  rgba(53, 60, 80, 1);
+  background-color: transparent;
+  padding: 0;
+}
+
+.breadcrumb a {
+  color: var(--mainColor);
+}

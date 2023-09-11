@@ -1,0 +1,120 @@
+{ns     extend
+ import #{aidbox.repository.v1 hl7-fhir-r4-core.Appointment
+          hl7-fhir-r4-core.Practitioner
+          hl7-fhir-r4-core.Patient
+          hl7-fhir-r4-core.Reference}
+
+ ScheduleExtension
+ {:zen/tags            #{zen/schema zen.fhir/base-schema}
+  :zen.fhir/type       "ScheduleExtension"
+  :zen.fhir/version    "0.6.20"
+  :zen.fhir/profileUri "https://telemed.aidbox.io/resources/ScheduleExtension"
+  :type                zen/map
+  :confirms            #{zenbox/Resource}
+  :keys                {:reference     {:confirms #{zen.fhir/Reference}}
+                        :availableTime {:type  zen/vector
+                                        :every {:type zen/map
+                                                :require #{:duration :daysOfWeek :availableEndTime :availableStartTime}
+                                                :keys {:daysOfWeek {:type zen/vector :every {:type zen/string}}
+                                                       :duration {:type zen/number}
+                                                       :availableEndTime {:type zen/string}
+                                                       :availableStartTime {:type zen/string}}}}}}
+
+ EmailNotification
+ {:zen/tags            #{zen/schema zen.fhir/base-schema}
+  :zen.fhir/type       "EmailNotification"
+  :zen.fhir/version    "0.6.20"
+  :zen.fhir/profileUri "https://telemed.aidbox.io/resources/EmailNotification"
+  :type                zen/map
+  :confirms            #{zenbox/Resource}
+  :require             #{:status :body :to}
+  :keys                {:name       {:type              zen/string
+                                     :fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-name"}
+                        :reference  {:fhir/extensionUri  "https://telemed.aidbox.io/resources/EmailNotification-reference"
+                                     :confirms           #{zen.fhir/Reference},
+                                     :zen.fhir/reference {:refers #{hl7-fhir-r4-core.Appointment/schema}}}
+                        :status     {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-status"
+                                     :type              zen/string
+                                     :enum              [{:value "in-queue"} {:value "accepted"} {:value "failed"} {:value "delivered"}]}
+                        :from       {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-from"
+                                     :type              zen/string}
+                        :subject    {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-subject"
+                                     :type              zen/string}
+                        :body       {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-body"
+                                     :type              zen/string}
+                        :to         {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-to"
+                                     :type              zen/string}
+                        :externalId {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-externalId"
+                                     :type              zen/string}
+                        :data       {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-data"
+                                     :type zen/map
+                                     :validation-type   :open}
+                        :error      {:fhir/extensionUri "https://telemed.aidbox.io/resources/EmailNotification-error"
+                                     :type zen/map
+                                     :validation-type   :open}}}
+
+
+ Chat
+ {:zen/tags            #{zen/schema zen.fhir/base-schema}
+  :zen.fhir/type       "Chat"
+  :zen.fhir/version    "0.6.20"
+  :zen.fhir/profileUri "https://telemed.aidbox.io/resources/Chat"
+  :confirms            #{zenbox/Resource}
+  :type                zen/map
+  :keys                {:status      {:type              zen/string
+                                      :enum              [{:value "active"} {:value "closed"}]
+                                      :fhir/extensionUri "https://telemed.aidbox.io/resources/Chat-status"}
+
+                        :participant {:fhir/extensionUri "https://telemed.aidbox.io/resources/Chat-participant"
+                                      :type              zen/vector
+                                      :every             {:type zen/map
+                                                          :keys {:name   {:fhir/extensionUri "https://telemed.aidbox.io/resources/Chat-participant-name"
+                                                                          :type zen/map
+                                                                          :validation-type   :open}
+                                                                 :viewed {:fhir/extensionUri "https://telemed.aidbox.io/resources/Chat-participant-viewed"
+                                                                          :type              zen/number}
+                                                                 :user   {:fhir/extensionUri  "https://telemed.aidbox.io/resources/Chat-participant-user"
+                                                                          :confirms           #{
+                                                                                                zen.fhir/Reference},
+                                                                          :zen.fhir/reference {:refers #{hl7-fhir-r4-core.Practitioner/schema hl7-fhir-r4-core.Patient/schema}}}}}}}}
+ ChatMessage
+ {:zen/tags            #{zen/schema zen.fhir/base-schema}
+  :zen.fhir/type       "ChatMessage"
+  :zen.fhir/version    "0.6.20"
+  :zen.fhir/profileUri "https://telemed.aidbox.io/resources/ChatMessage"
+  :confirms            #{zenbox/Resource}
+  :type                zen/map
+  :keys                {:sender {:fhir/extensionUri  "https://telemed.aidbox.io/resources/ChatMessage-sender"
+                                 :confirms           #{
+                                                       zen.fhir/Reference},
+                                 :zen.fhir/reference {:refers #{hl7-fhir-r4-core.Practitioner/schema hl7-fhir-r4-core.Patient/schema}}}
+                        :name   {:fhir/extensionUri "https://telemed.aidbox.io/resources/ChatMessage-name"
+                                 :type zen/map
+                                 :validation-type   :open}
+                        :body   {:fhir/extensionUri "https://telemed.aidbox.io/resources/ChatMessage-body"
+                                 :type              zen/string}
+                        :chat   {:fhir/extensionUri  "https://telemed.aidbox.io/resources/ChatMessage-chat"
+                                 :confirms           #{
+                                                       zen.fhir/Reference},
+                                 :zen.fhir/reference {:refers #{Chat}}}}}
+
+ schedule-extension-repository
+  {:zen/tags                #{aidbox.repository.v1/repository}
+   :resourceType            "ScheduleExtension"
+   :base-profile            ScheduleExtension
+   :extra-parameter-sources :all}
+ email-notification-repository
+ {:zen/tags                #{aidbox.repository.v1/repository}
+  :resourceType            "EmailNotification"
+  :base-profile            EmailNotification
+  :extra-parameter-sources :all}
+ chat-repository
+ {:zen/tags                #{aidbox.repository.v1/repository}
+  :resourceType            "Chat"
+  :base-profile            Chat
+  :extra-parameter-sources :all}
+ chat-message-repository
+ {:zen/tags                #{aidbox.repository.v1/repository}
+  :resourceType            "ChatMessage"
+  :base-profile            ChatMessage
+  :extra-parameter-sources :all}}

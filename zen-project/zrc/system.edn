@@ -1,0 +1,58 @@
+{ns     system
+ import #{aidbox hl7-fhir-r4-core hl7-fhir-r4-core.Schedule config aidbox.repository.v1 extend api task}
+
+ seed
+ {:zen/tags                 #{aidbox/service}
+  :engine                   aidbox/seed
+  :convert-to-aidbox-format true
+  :files                    ["icd10cm.ndjson.gz"]}
+
+ repositories
+ {:zen/tags     #{aidbox/service}
+  :engine       aidbox.repository.v1/engine
+  :repositories #{extend/schedule-extension-repository
+                  extend/email-notification-repository
+                  extend/chat-repository
+                  extend/chat-message-repository}
+  :load-default true}
+
+
+ ScheduleTelemed
+ {:zen/tags            #{zen/schema zen.fhir/profile-schema}
+  :type                zen/map
+  :zen.fhir/type       "Schedule"
+  :zen.fhir/version    "0.6.20"
+  :zen.fhir/profileUri "https://telemed.aidbox.io/resources/Schedule"
+  :confirms            #{hl7-fhir-r4-core.Schedule/schema}
+  :keys                {:availableTime
+                        {:type              zen/vector
+                         :fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime"
+                         :every
+                         {:type zen/map
+                          :keys {:daysOfWeek {:type              zen/vector
+                                              :fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime-dow"
+                                              :every             {:type zen/string
+                                                                  :enum [{:value "mon"} {:value "tue"} {:value "wed"}
+                                                                         {:value "thu"} {:value "fri"} {:value "sat"}
+                                                                         {:value "sun"}]}}
+                                 :allDay     {:fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime-all"
+                                              :type              zen/boolean}
+                                 :startTime  {:fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime-start"
+                                              :type              zen/string
+                                              :regex             "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"}
+                                 :endTime    {:fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime-end"
+                                              :type              zen/string
+                                              :regex             "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"}
+                                 :duration   {:fhir/extensionUri "https://telemed.aidbox.io/resources/Schedule-availableTime-duration"
+                                              :type              zen/number}}}}}}
+
+ box
+ {:zen/tags #{aidbox/system}
+  :config   config/base-config
+  :services {:admin-user-seed  config/admin-user-seed
+             :root-client-seed config/root-client-seed
+             :preload          seed
+             :http             api/server
+             :repositories     repositories
+             :scheduler        task/scheduler-service
+             :trigger          task/subscription-trigger-service}}}

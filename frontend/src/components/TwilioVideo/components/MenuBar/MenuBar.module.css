@@ -1,0 +1,11 @@
+.container{
+  background-color: lightgray;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  position: absolute;
+  display: flex;
+  padding: 0 1.43em;
+  z-index: 10;
+}

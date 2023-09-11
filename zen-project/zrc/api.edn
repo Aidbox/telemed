@@ -1,0 +1,41 @@
+{ns     api
+ import #{aidbox aidbox.rest aidbox.rest.v1}
+
+
+ node-app
+ {:zen/tags #{aidbox.rest/op}
+  :engine   aidbox.rest.v1/gateway
+  :url      #env APP_URL
+  :secret   #env APP_SECRET}
+
+ api
+ {:zen/tags                  #{aidbox.rest/api}
+  "node-app-git-commit-hash" {:GET node-app}
+  "EmailNotification"        {"$check-mail" {:GET node-app}}
+  "$create-user"             {:POST node-app}
+  "User"                     {[:id] {"$update-user" {:POST node-app}
+                                     "$delete-user" {:DELETE node-app}}}
+  "$twilio"                  {"get-token" {[:user] {[:root] {:GET node-app}}}}
+  "Appointment"              {[:id]       {"$delete" {:DELETE node-app}}
+                              "$get-list" {:POST node-app}
+                              "$create"   {:POST node-app}}
+  "Encounter"                {[:id]       {"$get-info" {:GET node-app}
+                                           "$start"    {:GET node-app}
+                                           "$finish"   {:GET node-app}}
+                              "$get-list" {:GET node-app}}
+  "Condition"                {[:id] {"$get-list" {:GET node-app}}}
+  "auth"                     {"$sign-up"                   {:POST node-app}
+                              "$resend-confirmation-email" {:POST node-app}
+                              "$confirm-email"             {:POST node-app}
+                              "$password-recovery-submit"  {:POST node-app}
+                              "$password-recovery"         {:POST node-app}}
+  "NodeChat"                 {[:id] {"$create"          {:POST node-app}
+                                     "$chats"           {:GET node-app}
+                                     "$create-messages" {:POST node-app}
+                                     "$get-messages"    {:GET node-app}}}
+  "Schedule"                 {[:id] {"$slots" {:POST node-app}
+                                     "$rules" {:POST node-app :PATCH node-app}}}}
+ server
+ {:zen/tags #{aidbox/service}
+  :engine   aidbox/http
+  :apis     #{api}}}

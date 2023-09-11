@@ -1,0 +1,47 @@
+version: "3.1"
+services:
+  aidbox-db:
+    image: healthsamurai/aidboxdb:15.3
+    ports:
+      - "${PGHOSTPORT}:5432"
+    volumes:
+      - "./pgdata:/data"
+    environment:
+      POSTGRES_USER: "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB: "${PGDATABASE}"
+
+  aidbox:
+    hostname: aidbox
+    image: healthsamurai/aidboxone:edge
+    depends_on: [ "aidbox-db" ]
+    links:
+        - "aidbox-db:database"
+    ports:
+        - "${AIDBOX_PORT}:${AIDBOX_PORT}"
+    volumes:
+        - "./zen-project/zrc:/aidbox-project/zrc"
+        - "./zen-project/zen-package.edn:/aidbox-project/zen-package.edn"
+        - "./zen-project/zen-packages:/aidbox-project/zen-packages"
+    env_file:
+        - .env
+    environment:
+        BOX_PROJECT_GIT_TARGET__PATH: /aidbox-project
+        AIDBOX_ZEN_ENTRYPOINT: system/box
+        AIDBOX_DEV_MODE: "true"
+        AIDBOX_ZEN_DEV_MODE: "true"
+        PGPORT: 5432
+        PGHOST: aidbox-db
+
+  node-app:
+    hostname: node-app
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4000:4000
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/usr/src/app
+      - ./backend/node_modules:/usr/src/app/node_modules

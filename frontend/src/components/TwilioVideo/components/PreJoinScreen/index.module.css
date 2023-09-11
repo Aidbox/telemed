@@ -1,0 +1,23 @@
+.content{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-content: center;
+  width: 800px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.localPreviewContainer {
+
+}
+.buttonGroup{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.buttonGroup button + button{
+  margin-top: .75rem;
+}
