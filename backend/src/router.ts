@@ -1,32 +1,34 @@
-import { FastifyInstance } from 'fastify'
-import { HookHandlerDoneFunction } from 'fastify/types/hooks'
-import { FastifyReply } from 'fastify/types/reply'
-import { FastifyRequest } from 'fastify/types/request'
-import { BaseSchema, safeParse } from 'valibot'
+import { FastifyInstance } from 'fastify';
+import { HookHandlerDoneFunction } from 'fastify/types/hooks';
+import { FastifyReply } from 'fastify/types/reply';
+import { FastifyRequest } from 'fastify/types/request';
+import { BaseSchema, safeParse } from 'valibot';
 
-import { endpoints as AuthEndpoints } from './modules/auth/index.js'
-import { endpoints as ChatEndpoints } from './modules/chat/index.js'
-import { endpoints as CommonEndpoints } from './modules/common/index.js'
-import { endpoints as SchedulingEndpoints } from './modules/scheduling/index.js'
-import { endpoints as ConditionEndpoints } from './modules/сondition/index.js'
+import { endpoints as AuthEndpoints } from './modules/auth/index.js';
+import { endpoints as ChatEndpoints } from './modules/chat/index.js';
+import { endpoints as CommonEndpoints } from './modules/common/index.js';
+import { endpoints as SchedulingEndpoints } from './modules/scheduling/index.js';
+import { endpoints as ConditionEndpoints } from './modules/condition/index.js';
 
 export const authHandler = (
   request: FastifyRequest,
   reply: FastifyReply,
-  done: HookHandlerDoneFunction
+  done: HookHandlerDoneFunction,
 ) => {
-  const authHeader = request.headers.authorization
+  const authHeader = request.headers.authorization;
   if (!authHeader) {
-    return reply.status(401).send({ error: { message: 'Authorization missing' } })
+    return reply
+      .status(401)
+      .send({ error: { message: 'Authorization missing' } });
   }
-  const token = authHeader && authHeader?.split(' ')?.[1]
+  const token = authHeader && authHeader?.split(' ')?.[1];
   if (token === request.appToken) {
-    return done()
+    return done();
   }
   return reply.status(401).send({
-    error: { message: 'Authorization failed' }
-  })
-}
+    error: { message: 'Authorization failed' },
+  });
+};
 
 export const initRoutes = (app: FastifyInstance) => {
   const routes: Array<
@@ -41,11 +43,11 @@ export const initRoutes = (app: FastifyInstance) => {
     AuthEndpoints,
     ChatEndpoints,
     CommonEndpoints,
-    SchedulingEndpoints
-  )
+    SchedulingEndpoints,
+  );
 
   for (let i = 0; i < routes.length; i++) {
-    const route = routes[i]
+    const route = routes[i];
     app[route.method](
       route.path,
       {
@@ -55,23 +57,23 @@ export const initRoutes = (app: FastifyInstance) => {
               preValidation: (
                 request: FastifyRequest<{ Body: Record<string, any> }>,
                 reply,
-                done
+                done,
               ) => {
-                console.log('===========================')
-                console.log(request.params, request.body)
-                console.log('===========================')
-                const result = safeParse(route.validation!, request.body.data)
+                console.log('===========================');
+                console.log(request.params, request.body);
+                console.log('===========================');
+                const result = safeParse(route.validation!, request.body.data);
 
                 if (result.success) {
-                  done()
+                  done();
                 } else {
-                  reply.status(400).send(result.error.issues)
+                  reply.status(400).send(result.error.issues);
                 }
-              }
+              },
             }
-          : {})
+          : {}),
       },
-      route.handler
-    )
+      route.handler,
+    );
   }
-}
+};
