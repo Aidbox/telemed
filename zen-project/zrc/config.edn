@@ -65,7 +65,8 @@
   :engine   aidbox/seed-v2
   :resources
   {:User {:admin
-          {:password #env AIDBOX_ADMIN_PASSWORD}}
+          {:password #env AIDBOX_ADMIN_PASSWORD
+           :data {:roleName "admin" :verified true :firstEntry false}}}
 
    :AccessPolicy {:allow-admin-user
                   {:engine "allow"
@@ -74,12 +75,17 @@
  {:zen/tags #{aidbox/service}
   :engine   aidbox/seed-v2
   :resources
-  {:Client {:root
-            {:name        "Root client"
-             :secret      #env AIDBOX_CLIENT_SECRET
-             :first_party true
-             :grant_types ["basic"]}}
+  {:Client {:root {:name        "backend"
+                   :secret      #env AIDBOX_CLIENT_SECRET
+                   :first_party true
+                   :grant_types ["basic"]}
+            :frontend {:name        "frontend"
+                       :secret      "secret"
+                       :first_party false
+                       :grant_types ["password"]}}
 
-   :AccessPolicy {:allow-root-client
-                  {:engine "allow"
-                   :link   [{:resourceType "Client" :id "root"}]}}}}}
+   :AccessPolicy {:allow-root-client {:engine "allow"
+                                      :link   [{:resourceType "Client" :id "root"}
+                                               {:resourceType "Client" :id "frontend"}]}
+                  :allow-public-frontend {:engine "matcho"
+                                          :matcho {:uri "#/auth/*", :request-method {:$enum ["post"]}}}}}}}
