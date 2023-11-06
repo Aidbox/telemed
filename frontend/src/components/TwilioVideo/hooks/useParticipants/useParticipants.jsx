@@ -18,8 +18,8 @@ export default function useParticipants () {
     room.on('participantConnected', participantConnected)
     room.on('participantDisconnected', participantDisconnected)
     return () => {
-      if (typeof room.off === 'function') room.off('participantConnected', participantConnected)
-      if (typeof room.off === 'function') room.off('participantDisconnected', participantDisconnected)
+      if (typeof room.removeListener === 'function') room.removeListener('participantConnected', participantConnected)
+      if (typeof room.removeListener === 'function') room.removeListener('participantDisconnected', participantDisconnected)
     }
   }, [room])
 

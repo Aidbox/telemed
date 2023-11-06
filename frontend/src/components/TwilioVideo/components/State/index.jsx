@@ -21,8 +21,8 @@ export default function AppStateProvider (props) {
     ...contextValue,
     getToken: async (identity, roomName) => {
       return http
-        .get(`$twilio/get-token/${identity}/${roomName}`)
-        .then((res) => res.data.token)
+        .get(`$twilio/get-token/${identity}/${roomName}`.replace(' ', '_'))
+        .then(({ response }) => response.data.token)
     }
   }
 

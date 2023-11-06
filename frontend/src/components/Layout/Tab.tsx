@@ -6,6 +6,7 @@ import css from './Layout.module.css'
 export function Tabs ({ children }: { children: React.ReactNode }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const mapped = React.Children.toArray(children)
+  console.log(activeIndex)
 
   const dynamicClasses = (index: number) => ({
     [css['tabs-container__tab']]: true,

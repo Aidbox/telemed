@@ -4,27 +4,6 @@ import { useEffect } from 'react'
 
 import AddIcon from '../assets/Add.svg'
 import css from '../components/Appointment/Appointment.module.css'
-
-// import { isAfter, startOfDay } from 'date-fns'
-// import React, { useState } from 'react'
-
-// import { useController } from '../../../../lib/components/ControllerLayer'
-// import { useStore } from '../../../../lib/components/StoreLayer'
-// import { Tabs, Tab } from '../../../components/Collection/Tabs'
-// import { Header } from '../../../components/Header'
-// import AddIcon from '../../../components/icons/AddIcon'
-// import {
-//   Detail,
-//   Master,
-//   MasterDetailLayout
-// } from '../../../components/MasterDetailLayout'
-// import { Link } from '../../../components/Router'
-// import { AppointmentController } from '../AppointmentController'
-
-// import { AppointmentDetails } from './AppointmentDetails'
-// import classes from './Appointment.module.css'
-// import { AppointmentsList } from './AppointmentsList'
-
 import { AppointmentDetails } from '../components/Appointment/Details'
 import { AppointmentsList } from '../components/Appointment/List'
 import { Header } from '../components/Layout/Header'
@@ -50,33 +29,6 @@ export function Page () {
   const session = useUnit(Session)
   const appointments = useUnit(Appointments)
   const appointmentsHistory = useUnit(AppointmentsHistory)
-  // const [{ isLoading, data }] = useStore((state) => state.page)
-  // const [user] = useStore((state) => state.user)
-  // const [selectedAppointment, selectAppointment] = useState()
-  // const isPatient = user.roleName === 'patient'
-  // const isPractitioner = user.roleName === 'practitioner'
-  // const ctrl = useController(AppointmentController)
-  //
-  // const deleteAppointment = async (id) => {
-  //   await ctrl.deleteAppointments(id)
-  //   selectAppointment(null)
-  // }
-  //
-  // const isFinished = (appointment) =>
-  //   appointment.status === 'finish' || appointment.status === 'fulfilled'
-  //
-  // const isAfterDate = (appointment) => {
-  //   return isAfter(startOfDay(new Date()), new Date(appointment.start))
-  // }
-  //
-  // const isActive = (appointment) =>
-  //   !isFinished(appointment) && !isAfterDate(appointment)
-  //
-  // const isNotActive = (appointment) => !isActive(appointment)
-  //
-  // const activeAppointment = data?.filter(isActive).reverse() || []
-  //
-  // const notActiveAppointment = data?.filter(isNotActive) || []
 
   useEffect(() => {
     if (session.resource && session.resource.id) {

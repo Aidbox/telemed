@@ -5,8 +5,9 @@ import React from 'react'
 import ExitIcon from '../../assets/Exit.svg'
 import GroupIcon from '../../assets/Group.svg'
 import Logo from '../../assets/logo.svg'
-import PhrIcon from '../../assets/Phr.svg'
+// import PhrIcon from '../../assets/Phr.svg'
 import ProfileIcon from '../../assets/Profile.svg'
+import VisitsIcon from '../../icons/VisitsIcon'
 import { LOG_OUT, Session } from '../../service/session'
 import { Link } from '../Link'
 
@@ -27,11 +28,11 @@ export function Layout ({ children }: Props) {
           </Link>
 
           {!session.isAdmin && <Link className={clsx([css.link, ['/', '/find-practitioner'].includes(path) && css.active])} to='/'>
-            <PhrIcon width={32} height={32} />
+            <VisitsIcon width={32} height={32} />
           </Link>}
 
           {/* {!session.isAdmin && <Link className={css.link} to='/'>
-            <VisitsIcon width={32} height={32} />
+            <PhrIcon width={32} height={32} />
           </Link>}
 
            {!session.isAdmin && <Link className={css.link} to='/'>

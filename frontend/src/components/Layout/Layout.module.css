@@ -99,6 +99,11 @@
   border-bottom: none;
 }
 
+.tabs-container__tab--active {
+  background-color: var(--bgColor);
+  border-bottom: none;
+}
+
 .tabs-container__content {
 
 }
