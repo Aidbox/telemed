@@ -26,23 +26,31 @@ export function Layout ({ children }: Props) {
             <Logo width={44} height={44} />
           </Link>
 
+          {!session.isAdmin && <Link className={clsx([css.link, ['/', '/find-practitioner'].includes(path) && css.active])} to='/'>
+            <PhrIcon width={32} height={32} />
+          </Link>}
+
           {/* {!session.isAdmin && <Link className={css.link} to='/'>
             <VisitsIcon width={32} height={32} />
           </Link>}
 
-          {!session.isAdmin && <Link className={css.link} to='/'>
+           {!session.isAdmin && <Link className={css.link} to='/'>
             <ChatIcon width={32} height={32} />
           </Link>} */}
-
-          {!session.isAdmin && <Link className={clsx([css.link, ['/', '/find-practitioner'].includes(path) && css.active])} to='/'>
-            <PhrIcon width={32} height={32} />
-          </Link>}
 
           {!session.isAdmin && <Link className={clsx([css.link, ['/profile', '/profile/update'].includes(path) && css.active])} to='/profile'>
             <ProfileIcon width={32} height={32} />
           </Link>}
 
           {session.isAdmin && <Link className={clsx([css.link, path === '/users' && css.active])} to='/users'>
+            <GroupIcon width={32} height={32} />
+          </Link>}
+
+          {session.isAdmin && <Link className={clsx([css.link, ['/report', '/report/encounters'].includes(path) && css.active])} to='/report'>
+            <GroupIcon width={32} height={32} />
+          </Link>}
+
+          {session.isAdmin && <Link className={clsx([css.link, ['/email-notification'].includes(path) && css.active])} to='/email-notification'>
             <GroupIcon width={32} height={32} />
           </Link>}
 

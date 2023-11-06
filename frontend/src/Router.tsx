@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 import { Layout } from './components/Layout/Layout'
 import { Appointment } from './pages/Appointment'
+import { EmailNotification } from './pages/EmailNotification'
 import { FindPractitioner } from './pages/FindPractitioner'
 import { ForgotPassword } from './pages/ForgotPassword'
 import { NotFound } from './pages/NotFound'
@@ -35,6 +36,7 @@ export const routes = [
 
   { path: '/users', route: [Users.route] },
   { path: '/report', route: [Report.route] },
+  { path: '/email-notification', route: [EmailNotification.route] },
 
   { path: '/profile', route: [Profile.route] },
   { path: '/profile/update', route: [ProfileUpdate.route] },
@@ -59,7 +61,8 @@ const Router = createRoutesView({
     { route: Profile.route, view: Profile.Page, layout: Layout },
     { route: ProfileUpdate.route, view: ProfileUpdate.Page, layout: Layout },
     { route: Users.route, view: Users.Page, layout: Layout },
-    { route: Report.route, view: Report.Page, layout: Layout }
+    { route: Report.route, view: Report.Page, layout: Layout },
+    { route: EmailNotification.route, view: EmailNotification.Page, layout: Layout }
   ],
   otherwise: () => <div>Page not found!</div>
 })
