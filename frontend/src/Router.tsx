@@ -1,7 +1,8 @@
-import { createHistoryRouter, createRouterControls, querySync } from 'atomic-router'
+import { createHistoryRouter, createRouterControls } from 'atomic-router'
 import { createRoutesView } from 'atomic-router-react'
-import { createStore } from 'effector'
+import { sample } from 'effector'
 import { createBrowserHistory } from 'history'
+import { useEffect } from 'react'
 
 import { Layout } from './components/Layout/Layout'
 import { Appointment } from './pages/Appointment'
@@ -16,7 +17,7 @@ import { SignUp } from './pages/SignUp'
 import { Users } from './pages/Users'
 import { Visit } from './pages/Visit'
 import { UPDATE_RECOVERY_CODE } from './service/reset-password'
-import { GET_USER_INFO } from './service/session'
+import { GET_USER_INFO, getUserInfo } from './service/session'
 import { UPDATE_CONFIRMATION_CODE } from './service/sign-in'
 
 export { Profile }
@@ -44,7 +45,7 @@ export const router = createHistoryRouter({ routes, controls })
 
 router.setHistory(history)
 
-export const App = createRoutesView({
+const Router = createRoutesView({
   routes: [
     { route: SignUp.route, view: SignUp.Page },
     { route: SignIn.route, view: SignIn.Page },
@@ -57,12 +58,16 @@ export const App = createRoutesView({
     { route: ProfileUpdate.route, view: ProfileUpdate.Page, layout: Layout },
     { route: Users.route, view: Users.Page, layout: Layout }
   ],
-  otherwise () {
-    return <div>Page not found!</div>
-  }
+  otherwise: () => <div>Page not found!</div>
 })
 
-GET_USER_INFO()
+export const App = () => {
+  useEffect(() => {
+    sample({ clock: getUserInfo.fail, target: SignIn.route.open })
+    GET_USER_INFO()
+  }, [])
+  return <Router />
+}
 
 controls.$query.watch(query => {
   if ('confirmation-code' in query) {

@@ -21,7 +21,7 @@
 }
 
 .aside .link-list .link {
-  background-color: transparent;
+  /*background-color: transparent;*/
   height: 60px;
   font-size: 18px;
   color:  rgba(53, 60, 80, 1);
@@ -94,7 +94,7 @@
   cursor:pointer;
 }
 
-.tabs-container__tab--active {
+.active {
   background-color: var(--bgColor);
   border-bottom: none;
 }

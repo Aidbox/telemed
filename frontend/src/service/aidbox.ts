@@ -1,5 +1,5 @@
-import { Client, E, R } from 'aidbox';
-export { E, R };
+import { Client, E, R } from 'aidbox'
+export { E, R }
 
 export const box = new Client('http://127.0.0.1:8888', {
   auth: {
@@ -7,9 +7,9 @@ export const box = new Client('http://127.0.0.1:8888', {
     client: { id: 'frontend', secret: 'secret' },
     storage: {
       get: () => localStorage.getItem('TOKEN'),
-      set: (token: string) => localStorage.setItem('TOKEN', token),
-    },
-  },
-});
+      set: (token: string) => localStorage.setItem('TOKEN', token)
+    }
+  }
+})
 
-export const http = box.HTTPClient();
+export const http = box.HTTPClient()

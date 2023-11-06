@@ -1,6 +1,6 @@
 import { createRoute, redirect } from 'atomic-router'
 import { useUnit } from 'effector-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import AddIcon from '../assets/Add.svg'
 import css from '../components/Appointment/Appointment.module.css'

@@ -44,6 +44,10 @@ const getResource = createEffect<User, BaseResponseResource<'Patient' | 'Practit
   return box.resource.get(resource.resourceType, resource.id)
 })
 
+const signOut = createEffect(async () => {
+  return box.auth.storage.set('')
+})
+
 Resource.on(getResource.doneData, (store, response) => response)
 User.on(getUserInfo.doneData, (store, { response: { data: { sub, ...data } } }) => {
   console.log(sub)
@@ -51,5 +55,6 @@ User.on(getUserInfo.doneData, (store, { response: { data: { sub, ...data } } }) 
 })
 
 sample({ clock: GET_USER_INFO, target: getUserInfo })
+sample({ clock: LOG_OUT, target: signOut })
 sample({ clock: getUserInfo.doneData, fn: (user: R<User>) => user.response.data, target: getResource })
 sample({ clock: updateUser.done, source: User, filter: (store, { result: userId }) => store?.id === userId, target: GET_USER_INFO })

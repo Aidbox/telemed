@@ -1,20 +1,12 @@
+import clsx from 'clsx'
 import { useUnit } from 'effector-react'
 import React from 'react'
 
-import ChatIcon from '../../assets/Chat.svg'
 import ExitIcon from '../../assets/Exit.svg'
 import GroupIcon from '../../assets/Group.svg'
 import Logo from '../../assets/logo.svg'
 import PhrIcon from '../../assets/Phr.svg'
 import ProfileIcon from '../../assets/Profile.svg'
-import VisitsIcon from '../../assets/Visits.svg'
-
-// import { useController } from '../../lib/components/ControllerLayer'
-// import { AppController } from '../AppController'
-
-// import { ErrorBoundary, ErrorFallback } from './Errors/ErrorBoundary'
-// import ExitIcon from '../../icons/'
-
 import { LOG_OUT, Session } from '../../service/session'
 import { Link } from '../Link'
 
@@ -24,6 +16,7 @@ interface Props { children: React.ReactNode }
 
 export function Layout ({ children }: Props) {
   const session = useUnit(Session)
+  const path = window.location.pathname
 
   return (
     <div className={css.layout}>
@@ -33,36 +26,28 @@ export function Layout ({ children }: Props) {
             <Logo width={44} height={44} />
           </Link>
 
-          {!session.isAdmin && <Link className={css.link} to='/'>
+          {/* {!session.isAdmin && <Link className={css.link} to='/'>
             <VisitsIcon width={32} height={32} />
           </Link>}
 
           {!session.isAdmin && <Link className={css.link} to='/'>
             <ChatIcon width={32} height={32} />
-          </Link>}
+          </Link>} */}
 
-          {!session.isAdmin && <Link className={css.link} to='/'>
+          {!session.isAdmin && <Link className={clsx([css.link, ['/', '/find-practitioner'].includes(path) && css.active])} to='/'>
             <PhrIcon width={32} height={32} />
           </Link>}
 
-          {!session.isAdmin && <Link className={css.link} to='/profile'>
+          {!session.isAdmin && <Link className={clsx([css.link, ['/profile', '/profile/update'].includes(path) && css.active])} to='/profile'>
             <ProfileIcon width={32} height={32} />
           </Link>}
 
-          {session.isAdmin && <Link className={css.link} to='/email-notifications'>
-            <GroupIcon width={32} height={32} />
-          </Link>}
-
-          {session.isAdmin && <Link className={css.link} to='/reports'>
-            <GroupIcon width={32} height={32} />
-          </Link>}
-
-          {session.isAdmin && <Link className={css.link} to='/users'>
+          {session.isAdmin && <Link className={clsx([css.link, path === '/users' && css.active])} to='/users'>
             <GroupIcon width={32} height={32} />
           </Link>}
 
           <Link
-            className={css.link} onClick={() => LOG_OUT()}
+            className={css.link} onClick={() => { console.log('CLICK'); LOG_OUT() }}
             to='/auth/sign-in'
           >
             <ExitIcon width={32} height={32} />
