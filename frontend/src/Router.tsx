@@ -11,6 +11,7 @@ import { ForgotPassword } from './pages/ForgotPassword'
 import { NotFound } from './pages/NotFound'
 import { Profile } from './pages/Profile'
 import { ProfileUpdate } from './pages/ProfileUpdate'
+import { Report } from './pages/Report'
 import { ResetPassword } from './pages/ResetPassword'
 import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
@@ -33,6 +34,7 @@ export const routes = [
   { path: '/auth/reset-password', route: [ResetPassword.route, NotFound.backToHomeRoute] },
 
   { path: '/users', route: [Users.route] },
+  { path: '/report', route: [Report.route] },
 
   { path: '/profile', route: [Profile.route] },
   { path: '/profile/update', route: [ProfileUpdate.route] },
@@ -56,7 +58,8 @@ const Router = createRoutesView({
     { route: Visit.route, view: Visit.Page, layout: Layout },
     { route: Profile.route, view: Profile.Page, layout: Layout },
     { route: ProfileUpdate.route, view: ProfileUpdate.Page, layout: Layout },
-    { route: Users.route, view: Users.Page, layout: Layout }
+    { route: Users.route, view: Users.Page, layout: Layout },
+    { route: Report.route, view: Report.Page, layout: Layout }
   ],
   otherwise: () => <div>Page not found!</div>
 })
