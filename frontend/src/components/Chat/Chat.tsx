@@ -27,8 +27,6 @@ export default function Chat ({ roomId, user, isActive = true, isVisit = false }
     SEND_MESSAGE({ text, user, roomId })
   }
 
-  console.log(messages)
-
   return (
     <div
       style={{

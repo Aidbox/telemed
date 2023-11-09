@@ -1,3 +1,66 @@
+.text {
+  margin: 0;
+  color: rgba(0, 0, 0, .7);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 300px;
+}
+
+.rowContainer {
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rowSelected {
+  background: rgba(0, 0, 0, .1);
+}
+
+.rowDefault {
+  background: white;
+}
+
+.rowDefault:hover {
+  background: var(--bgColor);
+}
+
+.row {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.lastMessageTime {
+  margin: 0;
+  color: rgba(0, 0, 0, .7);
+}
+
+.unreadMessageContainer {
+  padding: 2px;
+  background-color: rgba(53, 60, 80, 1);
+  border-radius: 32px;
+  width: 24px;
+  height: 24px;
+  margin-left: auto
+}
+
+.unreadMessage {
+  margin: 0;
+  text-align: center;
+  color: white
+}
+
+.profileImage{
+  width: 48px;
+  opacity: .2;
+  height: 48px;
+}
+
 .layout-full {
   display: flex;
   height: 500px;
@@ -85,6 +148,7 @@
 }
 
 .inner .text {
+  color: white;
   font-weight: lighter;
   overflow-wrap: break-word;
   line-height: .95em;
@@ -198,4 +262,3 @@
   transform: rotate(45deg);
   fill: var(--mainColor)
 }
-

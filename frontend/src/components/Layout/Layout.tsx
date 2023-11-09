@@ -7,6 +7,7 @@ import GroupIcon from '../../assets/Group.svg'
 import Logo from '../../assets/logo.svg'
 // import PhrIcon from '../../assets/Phr.svg'
 import ProfileIcon from '../../assets/Profile.svg'
+import ChatIcon from '../../icons/ChatIcon'
 import VisitsIcon from '../../icons/VisitsIcon'
 import { LOG_OUT, Session } from '../../service/session'
 import { Link } from '../Link'
@@ -31,12 +32,12 @@ export function Layout ({ children }: Props) {
             <VisitsIcon width={32} height={32} />
           </Link>}
 
-          {/* {!session.isAdmin && <Link className={css.link} to='/'>
-            <PhrIcon width={32} height={32} />
+          {!session.isAdmin && <Link className={clsx([css.link, ['/chat'].includes(path) && css.active])} to='/chat'>
+            <ChatIcon width={32} height={32} />
           </Link>}
 
-           {!session.isAdmin && <Link className={css.link} to='/'>
-            <ChatIcon width={32} height={32} />
+          {/* {!session.isAdmin && <Link className={css.link} to='/'>
+            <PhrIcon width={32} height={32} />
           </Link>} */}
 
           {!session.isAdmin && <Link className={clsx([css.link, ['/profile', '/profile/update'].includes(path) && css.active])} to='/profile'>

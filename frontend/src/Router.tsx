@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 import { Layout } from './components/Layout/Layout'
 import { Appointment } from './pages/Appointment'
+import { Chat } from './pages/Chat'
 import { EmailNotification } from './pages/EmailNotification'
 import { FindPractitioner } from './pages/FindPractitioner'
 import { ForgotPassword } from './pages/ForgotPassword'
@@ -28,6 +29,7 @@ export const routes = [
   { path: '/', route: [Appointment.route, NotFound.backToHomeRoute] },
   { path: '/find-practitioner', route: [FindPractitioner.route, NotFound.backToHomeRoute] },
   { path: '/visit/:encounter', route: [Visit.route, NotFound.backToHomeRoute] },
+  { path: '/chat', route: [Chat.route, Chat.backToHomeRoute] },
 
   { path: '/auth/sign-up', route: [SignUp.route, NotFound.backToHomeRoute] },
   { path: '/auth/sign-in', route: [SignIn.route, NotFound.backToHomeRoute] },
@@ -58,6 +60,7 @@ const Router = createRoutesView({
     { route: Appointment.route, view: Appointment.Page, layout: Layout },
     { route: FindPractitioner.route, view: FindPractitioner.Page, layout: Layout },
     { route: Visit.route, view: Visit.Page, layout: Layout },
+    { route: Chat.route, view: Chat.Page, layout: Layout },
     { route: Profile.route, view: Profile.Page, layout: Layout },
     { route: ProfileUpdate.route, view: ProfileUpdate.Page, layout: Layout },
     { route: Users.route, view: Users.Page, layout: Layout },

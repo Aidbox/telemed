@@ -42,32 +42,18 @@ export const endpoints = [
     path: '/NodeChat/:id/$chats',
     method: 'get',
     authRequired: true,
-    handler: async (
-      request: FastifyRequest<{
-        Params: { id: string };
-      }>,
-      reply: FastifyReply
-    ) => {
-      const {
-        aidboxClient,
-        params: { id }
-      } = request
-      const chatSql = `select jsonb_build_object('id', id, 'cts', cts) || resource as result from chat
-                         where jsonb_path_query_first(resource, '$.participant[*] ? (@.user.id == "?").*.id') is not null`
+    handler: async (request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) => {
+      const { aidboxClient, params: { id } } = request
 
-      const { result: chats } = await aidboxClient.rawSQL<{
-        result?: Array<Record<string, any>>;
-      }>(chatSql, [id])
+      const sql = `select jsonb_build_object('id', id, 'cts', cts) || resource as result from chat
+                       where jsonb_path_query_first(resource, ?) is not null`
 
-      if (!chats) {
-        return reply
-          .status(400)
-          .send({ error: { message: "User doesn't have any chats" } })
-      }
+      const chats = await aidboxClient.rawSQL<Array<Record<string, any>>>(sql, [`$.participant[*] ? (@.user.id == "${id}").*.id`])
+
       const result: any[] = []
 
       await Promise.all(
-        chats.map(async (chat) => {
+        (chats || []).map(async ({ result: chat }) => {
           const newChat = { ...chat }
 
           const viewedMessages = newChat.participant.find(
@@ -77,7 +63,7 @@ export const endpoints = [
           newChat.unrearedMessages =
             (
               await aidboxClient.rawSQL<{ count: number }>(
-                `select count(id) from "chatMessage" where resource#>>'{chat, id}'='${newChat.id}'`
+                `select count(id) from chatMessage where resource#>>'{chat, id}'='${newChat.id}'`
               )
             ).count - viewedMessages
 
@@ -88,6 +74,7 @@ export const endpoints = [
           result.push(newChat)
         })
       )
+
       result.sort((a: any, b: any) => {
         return (
           new Date(b?.lastMessage?.cts || b.cts).getTime() -
