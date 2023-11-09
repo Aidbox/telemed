@@ -13,6 +13,11 @@ interface Props {
   select: (id: string | undefined) => void
 }
 
+const getSpeciality = (data: Practitioner['qualification']) => {
+  const speciality = data?.[0]
+  return speciality?.code.text || 'unknown'
+}
+
 export const PractitionerList = ({ list, selected, select }: Props) => {
   return (
     <Table className='table'>
@@ -34,7 +39,7 @@ export const PractitionerList = ({ list, selected, select }: Props) => {
                     {resource?.name?.[0] ? constructReadableName(resource?.name?.[0]) : 'N/A'}
                   </span>
                   <span className={[css.spec, 'text-muted'].join(' ')}>
-                    Cardiologist
+                    {getSpeciality(resource.qualification)}
                   </span>
                 </div>
               </div>

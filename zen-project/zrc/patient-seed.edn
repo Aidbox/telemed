@@ -1,0 +1,10 @@
+{ns patient-seed
+
+    data
+    {:Patient {:03cb8799-bfbd-40fa-9ea8-96114cf1fec1 {:name [{:given ["Peter"]    :family "Chalmers"}]  :telecom []}
+               :b4f3aba4-11cd-4b85-8266-8b3d108ccc1a {:name [{:given ["James"]    :family "Anderson"}]  :telecom []}
+               :9e3c3692-2daa-460d-81de-806775c68dd2 {:name [{:given ["Maria"]    :family "Fernandez"}] :telecom []}
+               :3b62d6d6-0d57-4f4a-8e2f-b2732064226e {:name [{:given ["Marcus"]   :family "Johnson"}]   :telecom []}
+               :f00dcc2b-8dcc-49d9-b7ba-b537b10539f1 {:name [{:given ["Aisha"]    :family "Khan"}]      :telecom []}
+               :efbce2f5-f6c1-47c1-b91a-9ba156149d08 {:name [{:given ["Thomas"]   :family "Müller"}]    :telecom []}
+               :37fa1a15-5845-4aba-9969-3e67b8ff96c1 {:name [{:given ["Isabella"] :family "Rossi"}]     :telecom []}}}
