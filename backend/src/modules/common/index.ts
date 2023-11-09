@@ -435,8 +435,28 @@ export const endpoints = [
         .get(`MedicationRequest?.encounter.id=${encounter.id}`)
         .json<Record<string, any>>()
 
+      if (encounter.subject === undefined || encounter.subject.reference === undefined) {
+        return reply.status(400).send({
+          error: { message: 'patient is missing' }
+        })
+      }
+
+      const patient = await aidboxClient
+        .resource.get('Patient', encounter.subject.reference.split('/')[1])
+
+      if (!encounter.participant?.[0].individual?.reference) {
+        return reply.status(400).send({
+          error: { message: 'practitioner is missing' }
+        })
+      }
+
+      const practitioner = await aidboxClient
+        .resource.get('Practitioner', encounter.participant?.[0].individual?.reference.split('/')[1])
+
       const result = {
         ...encounter,
+        practitioner,
+        patient,
         medication: medication.entry ?? [],
         consultNote: docRef.entry?.[0].resource ?? null,
         condition: condition.entry ?? [],

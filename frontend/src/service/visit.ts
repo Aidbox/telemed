@@ -1,11 +1,14 @@
-import { AllergyIntolerance, Condition, Medication, DocumentReference } from 'aidbox/types'
+import { AllergyIntolerance, Condition, Medication, DocumentReference, Patient, Practitioner } from 'aidbox/types'
 import { createEffect, createEvent, createStore, sample } from 'effector'
 
 import { http, R } from './aidbox'
 
 type TEncounterStore = {
+  id: string
   loading: boolean
   status: 'planned' | 'arrived' | 'triaged' | 'in-progress' | 'onleave' | 'finished' | 'cancelled'
+  patient?: Patient
+  practitioner?: Practitioner
   medication: Array<Medication>,
   consultNote: DocumentReference | undefined,
   condition: Array<Condition>,
@@ -13,6 +16,7 @@ type TEncounterStore = {
 }
 
 const defaultEncounter: TEncounterStore = {
+  id: '',
   loading: true,
   status: 'finished',
   medication: [],

@@ -1,6 +1,6 @@
 import { createRoute } from 'atomic-router'
 import { useUnit } from 'effector-react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ProfileBase from '../assets/avatar.png'
 import ChatComponent from '../components/Chat/Chat'
@@ -9,7 +9,7 @@ import { Header } from '../components/Layout/Header'
 import { Master, MasterDetailLayout } from '../components/Layout/MasterDetailLayout'
 import { Tab, Tabs } from '../components/Layout/Tab'
 import { ChatList, ChatsList, GET_CHATS, GET_HISTORY } from '../service/chat'
-import { Session, User } from '../service/session'
+import { Session } from '../service/session'
 
 const route = createRoute()
 const backToHomeRoute = createRoute()
