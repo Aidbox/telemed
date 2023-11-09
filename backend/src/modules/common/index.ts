@@ -275,7 +275,7 @@ export const endpoints = [
         start: res.result.appointment.start,
         end: res.result.appointment.end,
         status: res.result.appointment.status,
-        chiefComplaint: getIn(res.result.appointment, ['reasonCode', 0, 'text'], null),
+        chiefComplaint: getIn(res.result.encounter, ['reasonCode', 0, 'text'], null),
         participant: {
           patient: res.result.patient,
           practitioner: res.result.practitioner
@@ -468,37 +468,35 @@ export const endpoints = [
   },
   {
     path: '/Encounter/$get-list',
-    method: 'get',
+    method: 'post',
     authRequired: true,
     handler: async (
-      request: FastifyRequest<{
-        Querystring: { practitioner?: string; patient?: string };
-      }>,
+      request: FastifyRequest<{ Body: { practitioner?: string; patient?: string } }>,
       reply: FastifyReply
     ) => {
-      const { aidboxClient, query: params } = request
+      const { aidboxClient, body } = request
 
-      let query = `select jsonb_build_object('encounter', a.resource || jsonb_build_object('id', a.id),
-                                         'encounter', enc.resource || jsonb_build_object('id', enc.id),
-                                         'practitioner', pract.resource || jsonb_build_object('id', pract.id),
-                                         'patient', pt.resource || jsonb_build_object('id', pt.id)
-    ) result
-               from encounter enc
-    inner join appointment a
-                on enc.resource#>>'{appointment,0,id}' = a.id
-    inner join practitioner pract
-               on pract.id = enc.resource#>>'{participant,0,individual,id}'
-    inner join patient pt
-                on pt.id = enc.resource#>>'{subject,id}'
-    WHERE 1=1`
+      let query = `select jsonb_build_object(
+        'encounter', a.resource || jsonb_build_object('id', a.id),
+        'encounter', enc.resource || jsonb_build_object('id', enc.id),
+        'practitioner', pract.resource || jsonb_build_object('id', pract.id),
+        'patient', pt.resource || jsonb_build_object('id', pt.id)
+      ) result from encounter enc
+      inner join appointment a on enc.resource#>>'{appointment,0,id}' = a.id
+      inner join practitioner pract on pract.id = enc.resource#>>'{participant,0,individual,id}'
+      inner join patient pt on pt.id = enc.resource#>>'{subject,id}'
+      WHERE 1=1`
 
-      if ('practitioner' in params) {
-        query += ` AND enc.resource#>>'{participant,0,individual,id}' = '${params.practitioner}'`
+      if ('practitioner' in body) {
+        query += ` AND enc.resource#>>'{participant,0,individual,id}' = '${body.practitioner}'`
       }
-      if ('patient' in params) {
-        query += ` AND enc.resource#>>'{subject,id}' = '${params.patient}'`
+
+      if ('patient' in body) {
+        query += ` AND enc.resource#>>'{subject,id}' = '${body.patient}'`
       }
+
       query += ' order by a.cts desc'
+
       const data = await aidboxClient.rawSQL<any>(query)
 
       const response = data.map((res: any) => ({

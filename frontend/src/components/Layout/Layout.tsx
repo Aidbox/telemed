@@ -5,7 +5,7 @@ import React from 'react'
 import ExitIcon from '../../assets/Exit.svg'
 import GroupIcon from '../../assets/Group.svg'
 import Logo from '../../assets/logo.svg'
-// import PhrIcon from '../../assets/Phr.svg'
+import PhrIcon from '../../assets/Phr.svg'
 import ProfileIcon from '../../assets/Profile.svg'
 import ChatIcon from '../../icons/ChatIcon'
 import VisitsIcon from '../../icons/VisitsIcon'
@@ -36,9 +36,9 @@ export function Layout ({ children }: Props) {
             <ChatIcon width={32} height={32} />
           </Link>}
 
-          {/* {!session.isAdmin && <Link className={css.link} to='/'>
+          {!session.isAdmin && <Link className={clsx([css.link, ['/encounter'].includes(path) && css.active])} to='/encounter'>
             <PhrIcon width={32} height={32} />
-          </Link>} */}
+          </Link>}
 
           {!session.isAdmin && <Link className={clsx([css.link, ['/profile', '/profile/update'].includes(path) && css.active])} to='/profile'>
             <ProfileIcon width={32} height={32} />

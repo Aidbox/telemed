@@ -134,7 +134,7 @@ export function AppointmentDetails () {
       </p>
       <hr />
       <p className='mb-0 font-weight-bold'>Chief Complaint</p>
-      <p>N/A</p>
+      <p>{appointment.chiefComplaint}</p>
     </div>
   )
 

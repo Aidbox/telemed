@@ -8,6 +8,7 @@ import { Layout } from './components/Layout/Layout'
 import { Appointment } from './pages/Appointment'
 import { Chat } from './pages/Chat'
 import { EmailNotification } from './pages/EmailNotification'
+import { Encounters } from './pages/Encounter'
 import { FindPractitioner } from './pages/FindPractitioner'
 import { ForgotPassword } from './pages/ForgotPassword'
 import { NotFound } from './pages/NotFound'
@@ -27,6 +28,7 @@ export { Profile }
 
 export const routes = [
   { path: '/', route: [Appointment.route, NotFound.backToHomeRoute] },
+  { path: '/encounter', route: [Encounters.route] },
   { path: '/find-practitioner', route: [FindPractitioner.route, NotFound.backToHomeRoute] },
   { path: '/visit/:encounter', route: [Visit.route, NotFound.backToHomeRoute] },
   { path: '/chat', route: [Chat.route, Chat.backToHomeRoute] },
@@ -58,6 +60,7 @@ const Router = createRoutesView({
     { route: ForgotPassword.route, view: ForgotPassword.Page },
     { route: ResetPassword.route, view: ResetPassword.Page },
     { route: Appointment.route, view: Appointment.Page, layout: Layout },
+    { route: Encounters.route, view: Encounters.Page, layout: Layout },
     { route: FindPractitioner.route, view: FindPractitioner.Page, layout: Layout },
     { route: Visit.route, view: Visit.Page, layout: Layout },
     { route: Chat.route, view: Chat.Page, layout: Layout },

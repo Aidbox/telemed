@@ -81,7 +81,7 @@ const TableRow = ({ appointment, selected, select, role }: RowProps) => {
             </strong>
 
             <span className={[css['user-cell__role'], 'text-muted'].join(' ')}>
-              {role === 'patient' ? 'Practitioner' : 'Patient'}
+              {appointment.chiefComplaint}
             </span>
           </div>
         </div>

@@ -39,7 +39,7 @@ export default function ChatsRowContainer ({ data, getInterlocutor, selectChat, 
               </div>
               <div>
                 <h6 style={{ margin: 0 }}>{interlocutorName}</h6>
-                <p className={css.text}>{lastMessageText || 'No messages yet'}</p>
+                <p className={css.textrow}>{lastMessageText || 'No messages yet'}</p>
               </div>
             </div>
             <div style={{ marginRight: '6px' }}>

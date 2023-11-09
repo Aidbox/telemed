@@ -22,7 +22,7 @@
   "Encounter"                {[:id]       {"$get-info" {:GET node-app}
                                            "$start"    {:GET node-app}
                                            "$finish"   {:GET node-app}}
-                              "$get-list" {:GET node-app}}
+                              "$get-list" {:POST node-app}}
   "Condition"                {[:id] {"$get-list" {:GET node-app}}}
   "auth"                     {"$sign-up"                   {:POST node-app}
                               "$resend-confirmation-email" {:POST node-app}
