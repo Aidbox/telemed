@@ -471,10 +471,10 @@ export const endpoints = [
     method: 'post',
     authRequired: true,
     handler: async (
-      request: FastifyRequest<{ Body: { practitioner?: string; patient?: string } }>,
+      request: FastifyRequest<{ Body: { data : { practitioner?: string; patient?: string } } }>,
       reply: FastifyReply
     ) => {
-      const { aidboxClient, body } = request
+      const { aidboxClient, body: { data: body } } = request
 
       let query = `select jsonb_build_object(
         'encounter', a.resource || jsonb_build_object('id', a.id),
@@ -495,7 +495,7 @@ export const endpoints = [
         query += ` AND enc.resource#>>'{subject,id}' = '${body.patient}'`
       }
 
-      query += ' order by a.cts desc'
+      query += ' order by enc.resource #>> \'{period, end}\' desc'
 
       const data = await aidboxClient.rawSQL<any>(query)
 

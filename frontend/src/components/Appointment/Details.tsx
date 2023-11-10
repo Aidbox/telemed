@@ -11,7 +11,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import CalendarIcon from '../../assets/Calendar.svg'
 import ClockIcon from '../../assets/Clock.svg'
 import profile from '../../assets/profile-base.png'
-import { Appointments, AppointmentStore, CANCEL_APPOINTMENT } from '../../service/appointment'
+import { AppointmentStore, CANCEL_APPOINTMENT } from '../../service/appointment'
 import { Session } from '../../service/session'
 import { constructReadableName } from '../../utils'
 // import Chat from '../../visit/components/Chat'
@@ -71,12 +71,8 @@ const updateEncounterStatus = (encounterStartDate: Date) => {
 
 type Appointment = AppointmentStore['list'][0]
 
-export function AppointmentDetails () {
+export function AppointmentDetails ({ appointment }: { appointment: Appointment }) {
   const session = useUnit(Session)
-  const { list, selected } = useUnit(Appointments)
-
-  const appointment = useMemo<Appointment | undefined>(
-    () => list.find(item => item.id === selected), [list, selected])
 
   const encounterStartDate = useMemo(
     () => new Date(appointment?.start || ''), [appointment])

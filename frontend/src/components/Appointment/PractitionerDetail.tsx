@@ -10,7 +10,6 @@ import TextArea from '../../components/TextArea'
 import { CREATE_APPOINTMENT } from '../../service/appointment'
 import { Session } from '../../service/session'
 import { constructReadableName } from '../../utils'
-import css from '../Auth/Auth.module.css'
 
 import classes from './FindPractitioner.module.css'
 import { FindPractitionerSchedule } from './PractitionerSchedule'
@@ -41,6 +40,11 @@ export function FindPractitionerDetails (props: Props) {
     }
   }
 
+  const getSpeciality = (data: Practitioner['qualification']) => {
+    const speciality = data?.[0]
+    return speciality?.code.text || 'unknown'
+  }
+
   return (
     <form onSubmit={submit}>
       <div className={classes.details}>
@@ -52,7 +56,7 @@ export function FindPractitionerDetails (props: Props) {
           <div className={classes.names}>
             <strong>{practitionerName ? constructReadableName(practitionerName) : 'N/A'}</strong>
             <span className='text-muted' style={{ fontSize: '16px' }}>
-              Cardiologist
+              {getSpeciality(practitioner?.qualification)}
             </span>
           </div>
         </div>

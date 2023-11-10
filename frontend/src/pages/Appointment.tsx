@@ -1,6 +1,6 @@
 import { createRoute, redirect } from 'atomic-router'
 import { useUnit } from 'effector-react'
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import AddIcon from '../assets/Add.svg'
 import css from '../components/Appointment/Appointment.module.css'
@@ -12,10 +12,9 @@ import { Tabs, Tab } from '../components/Layout/Tab'
 import { Link } from '../components/Link'
 import {
   Appointments,
+  AppointmentStore,
   AppointmentsHistory, GET_APPOINTMENT_HISTORY,
-  GET_APPOINTMENT_LIST,
-  SELECT_APPOINTMENT,
-  SELECT_APPOINTMENT_FROM_HISTORY
+  GET_APPOINTMENT_LIST
 } from '../service/appointment'
 import { Session } from '../service/session'
 import { finishEncounter } from '../service/visit'
@@ -29,6 +28,7 @@ export function Page () {
   const session = useUnit(Session)
   const appointments = useUnit(Appointments)
   const appointmentsHistory = useUnit(AppointmentsHistory)
+  const [active, setActive] = useState<string>('')
 
   useEffect(() => {
     if (session.resource && session.resource.id) {
@@ -36,6 +36,11 @@ export function Page () {
       GET_APPOINTMENT_HISTORY(session.resource)
     }
   }, [session.resource])
+
+  const appointment = useMemo<AppointmentStore['list'][0] | undefined>(() => {
+    return appointments.list.find(item => item.id === active) ||
+      appointmentsHistory.list.find(item => item.id === active)
+    }, [active, appointments, appointmentsHistory])
 
   return (
     <MasterDetailLayout>
@@ -46,8 +51,8 @@ export function Page () {
         <Tabs>
           <Tab name='Appointments'>
             <AppointmentsList
-              selectAppointment={SELECT_APPOINTMENT}
-              selectedAppointment={appointments.selected}
+              selectAppointment={setActive}
+              selectedAppointment={active}
               items={appointments.list}
               role={session.user?.data.roleName}
             />
@@ -55,8 +60,8 @@ export function Page () {
 
           <Tab name='History'>
             <AppointmentsList
-              selectAppointment={SELECT_APPOINTMENT_FROM_HISTORY}
-              selectedAppointment={appointmentsHistory.selected}
+              selectAppointment={setActive}
+              selectedAppointment={active}
               items={appointmentsHistory.list}
               role={session.user?.data.roleName}
             />
@@ -66,7 +71,7 @@ export function Page () {
 
       <Detail>
         <Header>Details</Header>
-        <AppointmentDetails />
+        {appointment !== undefined && <AppointmentDetails appointment={appointment} />}
       </Detail>
     </MasterDetailLayout>
   )

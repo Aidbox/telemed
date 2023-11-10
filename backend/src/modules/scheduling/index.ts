@@ -58,6 +58,13 @@ export const endpoints = [
         where s.start >= ? and a.id is NULL
         order by s.rg`
 
+      console.log(sql, [
+        JSON.stringify([{ id: practitioner.id, resourceType: 'Practitioner' }]),
+        startDate,
+        endDate,
+        startDate
+      ])
+
       const slots = await aidboxClient.rawSQL<Array<Slot>>(sql, [
         JSON.stringify([{ id: practitioner.id, resourceType: 'Practitioner' }]),
         startDate,
