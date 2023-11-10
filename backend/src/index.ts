@@ -84,7 +84,7 @@ const main = async () => {
   try {
     let isAidboxReady = false
     let tryCount = 1
-    while (!isAidboxReady && tryCount <= 20) {
+    while (!isAidboxReady && tryCount <= 100) {
       fastify.log.info(`Check Aidbox Availability... ${tryCount}`)
       let response
       try {
@@ -104,7 +104,7 @@ const main = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
 
-    // initSubscription(aidboxClient, mailgun)
+    initSubscription(aidboxClient, mailgun)
     // initScheduler(aidboxClient, config)
 
     await fastify.listen({ host: '0.0.0.0', port: config.app.port })

@@ -1,48 +1,46 @@
-import axios from 'axios';
-import FormData from 'formdata-node';
+import axios from 'axios'
+import FormData from 'formdata-node'
 
 export class Mailgun {
-  url: string;
-  apiKey: string;
-  constructor(options: { domain: string; apiKey: string }) {
-    this.url = options.domain;
-    this.apiKey = options.apiKey;
+  url: string
+  apiKey: string
+  constructor (options: { domain: string; apiKey: string }) {
+    this.url = options.domain
+    this.apiKey = options.apiKey
   }
 
-  sendMail(options: any) {
-    const data = this.jsonToFormData(options);
-    if (!data) return;
+  sendMail (options: any) {
+    const data = this.jsonToFormData(options)
+    if (!data) return
     return axios
-      .post(`${this.url}/messages`, data.stream, {
+      .post(`https://api.mailgun.net/v3/${this.url}/messages`, data.stream, {
         headers: data.headers,
-        auth: {
-          username: 'api',
-          password: this.apiKey,
-        },
+        auth: { username: 'api', password: this.apiKey }
       })
       .catch((err) => {
-        return err.response;
-      });
+        console.log(err.response)
+        return err.response
+      })
   }
 
-  getStats() {
+  getStats () {
     return axios.get(`${this.url}/events`, {
       auth: {
         username: 'api',
-        password: this.apiKey,
-      },
-    });
+        password: this.apiKey
+      }
+    })
   }
 
-  jsonToFormData(json: Record<string, any>) {
-    let formData = new FormData();
+  jsonToFormData (json: Record<string, any>) {
+    const formData = new FormData()
     if (typeof json === 'object') {
       for (const key in json) {
-        formData.set(key, json[key]);
+        formData.set(key, json[key])
       }
-      return formData;
+      return formData
     } else {
-      return false;
+      return false
     }
   }
 }

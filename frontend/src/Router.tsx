@@ -20,8 +20,9 @@ import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
 import { Users } from './pages/Users'
 import { Visit } from './pages/Visit'
+import { R } from './service/aidbox'
 import { UPDATE_RECOVERY_CODE } from './service/reset-password'
-import { GET_USER_INFO, getUserInfo } from './service/session'
+import { GET_USER_INFO, getUserInfo, SET_FIRST_ENTRY, User } from './service/session'
 import { UPDATE_CONFIRMATION_CODE } from './service/sign-in'
 
 export { Profile }
@@ -76,6 +77,11 @@ const Router = createRoutesView({
 export const App = () => {
   useEffect(() => {
     sample({ clock: getUserInfo.fail, target: SignIn.route.open })
+    sample({
+      clock: getUserInfo.doneData,
+      filter: (data: R<User>) => Boolean(data.response.data.data.firstEntry),
+      target: [SET_FIRST_ENTRY, ProfileUpdate.route.open]
+    })
     GET_USER_INFO()
   }, [])
   return <Router />

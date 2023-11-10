@@ -17,6 +17,7 @@ export interface User {
   resourceType: 'User'
 }
 
+export const SET_FIRST_ENTRY = createEvent()
 export const GET_USER_INFO = createEvent()
 export const LOG_OUT = createEvent()
 
@@ -39,6 +40,10 @@ export const getUserInfo = createEffect<void, R<UserInfo>, E<{ code: string }>>(
   return http.get('auth/userinfo')
 })
 
+const setUserEntry = createEffect(async (user: NULL<User>) => {
+  if (user !== null) return http.patch('User/' + user.id, { json: { data: { firstEntry: false } } })
+})
+
 const getResource = createEffect<User, BaseResponseResource<'Patient' | 'Practitioner'>, E<{ code: string }>>(async (data) => {
   const resource = data.link[0].link
   return box.resource.get(resource.resourceType, resource.id)
@@ -55,6 +60,7 @@ User.on(getUserInfo.doneData, (store, { response: { data: { sub, ...data } } }) 
 })
 
 sample({ clock: GET_USER_INFO, target: getUserInfo })
+sample({ clock: SET_FIRST_ENTRY, source: User, target: setUserEntry })
 sample({ clock: LOG_OUT, target: signOut })
 sample({ clock: getUserInfo.doneData, fn: (user: R<User>) => user.response.data, target: getResource })
 sample({ clock: updateUser.done, source: User, filter: (store, { result: userId }) => store?.id === userId, target: GET_USER_INFO })

@@ -1,4 +1,3 @@
-import { Link } from 'atomic-router-react'
 import { useUnit } from 'effector-react'
 import React from 'react'
 
@@ -10,6 +9,7 @@ import {
   ConfirmationEmail, ConfirmationCode
 } from '../../service/sign-in'
 import Button from '../Button/Button'
+import { Link } from '../Link'
 
 import css from './Auth.module.css'
 

@@ -7,7 +7,7 @@ export interface Notification {
   to: string
   status: string
   subject: string
-  error: { message: string }
+  error: { message: string | { message: string } }
 }
 
 export interface NotificationListStore {

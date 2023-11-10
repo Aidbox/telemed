@@ -40,7 +40,7 @@ const getUserResource = createEffect<User, Patient | Practitioner>(async (user) 
 })
 
 export const updateUser = createEffect<{ resource: Partial<Patient | Practitioner>, user: Partial<User> }, string>(async (data) => {
-  await http.post(`User/${data.user.id}/$update-user`, { json: data })
+  await http.post(`User/${data.user.id}/$update-user`, { json: { ...data, user: { ...data.user, data: { firstEntry: false } } } })
   return data.user.id || ''
 })
 
@@ -49,7 +49,7 @@ const createUser = createEffect<{ resource: Partial<Patient | Practitioner>, use
 })
 
 UsersListStore.on(getUsersList.doneData, (store, { response }) => {
-  return response.data.entry.map(item => item.resource).filter(item => item.id !== 'admin')
+  return response.data.entry.map(item => item.resource) // .filter(item => item.id !== 'admin')
 })
 
 UsersInterfaceState.on(CHANGE_INTERFACE, (_, data) => data)

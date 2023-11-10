@@ -45,6 +45,12 @@ export const Page = () => {
 
 interface RowProps { selectRow: (id: string) => void, selectedRow: string | undefined, notification: Notification }
 
+const getError = (error: Notification['error']) => {
+  if (typeof error?.message === 'string') return error?.message
+  if (typeof error?.message?.message === 'string') return error?.message?.message
+  return 'ok'
+}
+
 const CreateRow = ({ notification, selectRow, selectedRow }: RowProps) => {
   const activeRow = selectedRow === notification.id
   const rowClass = activeRow ? 'table-row-active' : 'table-row'
@@ -56,8 +62,8 @@ const CreateRow = ({ notification, selectRow, selectedRow }: RowProps) => {
       <td className={css['table-col']}>{ notification?.status || '一' }</td>
 
       <td className={css['table-col']}>
-        {notification.status !== 'in-queue' && <p style={{ padding: '0 20px' }}>
-          { notification.error?.message || 'Sent without error' }
+        {notification.status !== 'in-queue' && <p style={{ padding: '0 20px', margin: 0 }}>
+          {getError(notification.error)}
         </p>}
       </td>
 

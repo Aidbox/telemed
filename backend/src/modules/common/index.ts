@@ -207,7 +207,7 @@ export const endpoints = [
     }
   },
   {
-    path: '/$twilio/get-token/:user/:root',
+    path: '/$twilio/get-token/:user/:room',
     method: 'get',
     authRequired: true,
     handler: async (
@@ -238,7 +238,6 @@ export const endpoints = [
       reply: FastifyReply
     ) => {
       const { aidboxClient, body: { data: params } } = request
-      console.log('HISTORY: ', params)
 
       let query = `SELECT jsonb_build_object(
             'appointment', a.resource || jsonb_build_object('id', a.id),
@@ -331,8 +330,6 @@ export const endpoints = [
           }
         })
         .json<Encounter>()
-
-      console.log('1')
 
       const rows = await aidboxClient.rawSQL<any>(
         `select * from "user" where resource #>> '{ link, 0, link, id }' in ('${data.practitioner}', '${data.patient}')`
@@ -552,13 +549,14 @@ export const endpoints = [
     ) => {
       const { aidboxClient, params: { id } } = request
 
-      const { appointment: appointmentsList } = await aidboxClient.resource.get('Encounter', id)
+      const { appointment: appointmentsList, ...rest } = await aidboxClient.resource.get('Encounter', id)
 
-      console.log('ENCOUNTER ID: ', id)
-      console.log('APPOINTMENTS: ', JSON.stringify(appointmentsList))
-      console.log('APPOINTMENT ID: ', appointmentsList?.[0]?.id)
-      if (appointmentsList?.[0]?.id) {
-        await aidboxClient.resource.update('Appointment', appointmentsList[0].id, { status: 'fulfilled' })
+      console.log(rest)
+      console.log(appointmentsList)
+
+      if (appointmentsList?.[0]?.reference) {
+        const [, id] = appointmentsList?.[0]?.reference.split('/')
+        await aidboxClient.resource.update('Appointment', id, { status: 'fulfilled' })
       }
 
       await aidboxClient.resource.update('Encounter', id, { status: 'finished' })
