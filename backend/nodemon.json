@@ -2,5 +2,5 @@
   "watch": ["src/**/*.ts"],
   "ext": "ts",
   "legacyWatch": true,
-  "exec": "node --no-warnings --loader ts-node/esm ./src/index.ts"
+  "exec": "tsx --watch ./src/index.ts"
 }

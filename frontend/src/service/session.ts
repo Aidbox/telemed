@@ -21,6 +21,7 @@ export const SET_FIRST_ENTRY = createEvent()
 export const GET_USER_INFO = createEvent()
 export const LOG_OUT = createEvent()
 
+
 const User = createStore<NULL<User>>(null)
 const Resource = createStore<NULL<Patient | Practitioner>>(null)
 

@@ -1,5 +1,3 @@
-import { Appointment } from 'aidbox/types'
-
 import { AppointmentData } from '../modules/common'
 
 export function transformRoleDataWithMerge (params: any, resource: any) {

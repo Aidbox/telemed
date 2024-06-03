@@ -1,3 +1,4 @@
+/*
 import { Client } from 'aidbox'
 import Fastify from 'fastify'
 import fastifyHealthcheck from 'fastify-healthcheck'
@@ -115,3 +116,28 @@ const main = async () => {
 }
 
 main()
+*/
+
+import { createApp } from "./app/instance.js";
+import path from 'node:path';
+
+const app = await createApp(path.resolve("..", ".env"));
+
+app.manifest.addOperation("test", {test: true})
+
+await app.start();
+
+const a = {
+	resourceType: "Schedule",
+	extension: [
+		{
+			url: "https://aidbox.io/availabelTime",
+			extension: [
+				{
+					url: "slotConf",
+					extension: [{ url: "daysOfWeek", valueCode: "mon" }, {}],
+				},
+			],
+		},
+	],
+};
